@@ -1,0 +1,136 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emoji Memory Game</title> 
+    <!-- CSS styles are defined here --> 
+    <style>
+        body { 
+            font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif; 
+            background-color: #FFEB3B; /* Bright yellow background */ 
+            text-align: center; 
+            padding: 20px; 
+            margin: 0 auto; 
+            color: #333; 
+        } 
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat (4, 80px); 
+            gap: 8px; 
+            margin: 20px auto; 
+            justify-content: center; 
+        }
+        .card { 
+            height: 80px; 
+            background: #FF5722; /* Vibrant orange for cards */ 
+            border-radius: 10px; 
+            box-shadow: 4px 8px rgba(0,0,0,0.2); 
+            color: transparent; 
+            cursor: pointer; 
+            text-align: center; 
+            line-height: 80px; 
+            font-size: 32px; 
+            transition: transform 0.3s ease, background 0.3s ease; 
+        } 
+        .card:hover { 
+            transform: translateY(-5px);
+        }
+        .flipped { 
+            background: #4CAF50; /* Green for flipped cards */ 
+            color: white; 
+            transform: rotateY(180deg); 
+        }  
+        #newGame { 
+            background-color: #2196F3; /* Blue button */ 
+            color: white; 
+            border: none; 
+            padding: 10px 20px; 
+            border-radius: 5px; 
+            font-size: 16px; 
+            cursor: pointer; 
+            margin-top: 10px; 
+            font-family: inherit; 
+        } 
+        #newGame:hover { 
+            background-color: #0D47A1; 
+        }
+        #score { 
+            font-weight: bold; 
+            font-size: 24px; 
+            color: #E91E63; /* Pink score */  
+        } 
+    </style>
+</head> 
+<body> 
+    <div> 
+    <span>Score: <span id="score">0</span></span> 
+    <span style="margin-left: 20px;">Time: <span id="timer">0</span> seconds</span> 
+    </div> 
+    <div id="grid" class="grid"></div> 
+    <button id="newGame">New Game</button> 
+    <!-- JavaScript code is defined here --> 
+    <script>
+        // Variables 
+        let flipped = []; 
+        let score = 0; 
+        let timerInterval; 
+        let seconds = 0;
+        const emojis = [
+            '🍎', '🚀', '🌮', '🐱', '🌈', '⚽',
+            '🍎', '🚀', '🌮', '🐱', '🌈', '⚽'
+        ];
+        // Function to shuffle and create the game 
+        function createGame() { 
+    // Shuffle the emojis array 
+    // Math.random() - 0.5 gives a value between -0.5 and 0.5 
+    // This randomizes the sort order 
+    const shuffledEmojis = [...emojis].sort(() => Math.random() - 0.5); 
+    // Clear previous cards 
+    const gridElement = document.getElementById('grid'); 
+    gridElement.innerHTML = ''; 
+    // Create new cards 
+    shuffledEmojis.forEach(emoji => { 
+        // Create a new card element 
+        const card = document.createElement('div'); 
+        // Set class name to 'card' 
+        card.className = 'card'; 
+        // Set the emoji as the card's text content 
+        card.textContent = emoji; 
+        // Add click event listener to each card 
+        card.addEventListener('click', () => flipCard(card)); 
+        // Add card to the grid 
+        gridElement.appendChild(card); 
+    }); 
+} 
+
+// Check if game is complete (all cards flipped) 
+function checkGameComplete() { 
+// Get all card elements 
+const allCards = document.querySelectorAll('.card'); 
+// Check if every card has the 'flipped' class const allFlipped 
+); 
+= 
+Array.from(allCards). every (card => 
+card.classList.contains('flipped') 
+// If all cards are flipped, the game is complete 
+if(allFlipped) { 
+// Stop the timer 
+clearInterval (timerInterval); 
+// Show completion message after a short delay 
+setTimeout(() = { 
+alert(`Congratulations! You completed the game in ${seconds} seconds with a score of ${score}!`); 
+}, 500); 
+} 
+} 
+
+
+// Event listeners 
+document.getElementById('newGame').addEventListener('click', startGame); 
+// Initialize the game when the page loads 
+startGame(); 
+
+
+    </script>
+</body> 
+</html>
